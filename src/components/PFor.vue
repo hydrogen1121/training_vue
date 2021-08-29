@@ -1,10 +1,9 @@
 <template>
-  <!-- <ul>
-    <li v-for="(step, i) in steps" :class="{is-active: i < activeIndex}">
-      {{ step.text }}
-    </li>
-  </ul> -->
-  <div v-for="(step, index) in steps" :key="(step.message, index)">
+  <div
+    v-for="(step, index) in steps"
+    :key="(step.message, index)"
+    :class="{ 'is-active': index < allSteps }"
+  >
     {{ step.message }}
   </div>
 </template>
@@ -14,7 +13,9 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    activeIndex: Number,
+    activeIndex: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -26,7 +27,18 @@ export default defineComponent({
       ],
     };
   },
+  setup(activeIndex) {
+    const allSteps = (activeIndex = 1);
+    console.log(allSteps);
+    return {
+      allSteps,
+    };
+  },
 });
 </script>
 
-<style></style>
+<style>
+.is-active {
+  color: blue;
+}
+</style>
